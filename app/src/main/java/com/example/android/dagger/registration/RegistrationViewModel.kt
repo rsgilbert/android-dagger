@@ -17,12 +17,15 @@
 package com.example.android.dagger.registration
 
 import com.example.android.dagger.user.UserManager
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * RegistrationViewModel is the ViewModel that the Registration flow ([RegistrationActivity]
  * and fragments) uses to keep user's input data.
  */
-class RegistrationViewModel(val userManager: UserManager) {
+@Singleton
+class RegistrationViewModel @Inject constructor(val userManager: UserManager) {
 
     private var username: String? = null
     private var password: String? = null

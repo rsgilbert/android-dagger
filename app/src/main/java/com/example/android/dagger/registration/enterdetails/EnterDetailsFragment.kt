@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment
 import com.example.android.dagger.R
 import com.example.android.dagger.registration.RegistrationActivity
 import com.example.android.dagger.registration.RegistrationViewModel
+import javax.inject.Inject
 
 class EnterDetailsFragment : Fragment() {
 
@@ -40,7 +41,7 @@ class EnterDetailsFragment : Fragment() {
      * They could get combined but for the sake of the codelab, we're separating them so we have
      * different ViewModels with different lifecycles.
      */
-    private lateinit var registrationViewModel: RegistrationViewModel
+    lateinit var registrationViewModel: RegistrationViewModel
     private lateinit var enterDetailsViewModel: EnterDetailsViewModel
 
     private lateinit var errorTextView: TextView
@@ -58,24 +59,24 @@ class EnterDetailsFragment : Fragment() {
 
         enterDetailsViewModel = EnterDetailsViewModel()
         enterDetailsViewModel.enterDetailsState.observe(
-            viewLifecycleOwner,
-            { state ->
-                when (state) {
-                    is EnterDetailsSuccess -> {
+            viewLifecycleOwner
+        ) { state ->
+            when (state) {
+                is EnterDetailsSuccess -> {
 
-                        val username = usernameEditText.text.toString()
-                        val password = passwordEditText.text.toString()
-                        registrationViewModel.updateUserData(username, password)
+                    val username = usernameEditText.text.toString()
+                    val password = passwordEditText.text.toString()
+                    registrationViewModel.updateUserData(username, password)
 
-                        (activity as RegistrationActivity).onDetailsEntered()
-                    }
-                    is EnterDetailsError -> {
-                        errorTextView.text = state.error
-                        errorTextView.visibility = View.VISIBLE
-                    }
+                    (activity as RegistrationActivity).onDetailsEntered()
+                }
+                is EnterDetailsError -> {
+                    errorTextView.text = state.error
+                    errorTextView.visibility = View.VISIBLE
                 }
             }
-        )
+
+        }
 
         setupViews(view)
         return view
