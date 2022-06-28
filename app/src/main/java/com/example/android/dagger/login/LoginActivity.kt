@@ -35,7 +35,7 @@ import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
 
-
+    lateinit var loginComponent: LoginComponent
     @Inject
     lateinit var loginViewModel: LoginViewModel
     @Inject
@@ -44,7 +44,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var errorTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.inject(this)
+        loginComponent = (application as MyApplication).appComponent.loginComponent().create()
+        loginComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         loginViewModel.loginState.observe(this, Observer<LoginViewState> { state ->
