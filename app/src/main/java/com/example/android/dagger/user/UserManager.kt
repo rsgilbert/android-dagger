@@ -28,7 +28,7 @@ private const val PASSWORD_SUFFIX = "password"
  * Knows when the user is logged in.
  */
 @Singleton // so we have one instance of it in the dagger application graph
-class UserManager @Inject constructor(
+open class UserManager @Inject constructor(
     private val storage: Storage,
     // Since UserManager will be in charge of managing
     // the UserComponent lifecycle, it needs to know how to

@@ -24,14 +24,19 @@ import com.example.android.dagger.storage.SharedPreferencesStorage
 import com.example.android.dagger.user.UserManager
 
 open class MyApplication : Application() {
+    /**
+     * Creates an instance of AppComponent using its Factory constructor
+     * We pass the applicationContext that will be used as Context in the graph
+     * Note that you have to build the app first before you can get DaggerAppComponent
+     */
+    open fun initializeComponents(): AppComponent {
+        return DaggerAppComponent.factory().create(applicationContext)
+    }
 
-//     Instance of the AppComponent that will be used by all the
+    //     Instance of the AppComponent that will be used by all the
 //     Activities in the project
     val appComponent: AppComponent by lazy {
-        // Creates an instance of AppComponent using its Factory constructor
-        // We pass the applicationContext that will be used as Context in the graph
-        // Note that you have to build the app first before you can get DaggerAppComponent
-        DaggerAppComponent.factory().create(applicationContext)
+        initializeComponents()
     }
 
 
